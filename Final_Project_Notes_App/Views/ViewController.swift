@@ -114,6 +114,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let authViewController = AuthViewController()
+        self.navigationController?.pushViewController(authViewController, animated: true)
         notes = CoreDataManager.shared.fetchNotes()
         
         title = "My Notes"
