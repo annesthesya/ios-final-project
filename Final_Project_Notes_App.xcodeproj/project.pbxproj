@@ -21,7 +21,6 @@
 		97F265CA29EEF67200FE1895 /* AppNote.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97F265C829EEF67200FE1895 /* AppNote.xcdatamodeld */; };
 		97F265D029EFF16600FE1895 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F265CF29EFF16600FE1895 /* CoreDataManager.swift */; };
 		97F265D229F15C8200FE1895 /* NewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F265D129F15C8200FE1895 /* NewTableViewCell.swift */; };
-		DFBD0D3D29F559A900CC87D6 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD0D3C29F559A900CC87D6 /* AuthViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +59,6 @@
 		97F265C929EEF67200FE1895 /* AppNote.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppNote.xcdatamodel; sourceTree = "<group>"; };
 		97F265CF29EFF16600FE1895 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		97F265D129F15C8200FE1895 /* NewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTableViewCell.swift; sourceTree = "<group>"; };
-		DFBD0D3C29F559A900CC87D6 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +145,6 @@
 				97F2658F29E80DF000FE1895 /* ViewController.swift */,
 				97F265BB29E811FE00FE1895 /* NoteViewController.swift */,
 				97F265BD29E8121400FE1895 /* NewNoteViewController.swift */,
-				DFBD0D3C29F559A900CC87D6 /* AuthViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,7 +296,6 @@
 				97F2658C29E80DF000FE1895 /* AppDelegate.swift in Sources */,
 				97F265D029EFF16600FE1895 /* CoreDataManager.swift in Sources */,
 				97F265D229F15C8200FE1895 /* NewTableViewCell.swift in Sources */,
-				DFBD0D3D29F559A900CC87D6 /* AuthViewController.swift in Sources */,
 				97F2658E29E80DF000FE1895 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

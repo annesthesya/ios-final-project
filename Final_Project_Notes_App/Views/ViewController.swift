@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -114,8 +115,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let authViewController = AuthViewController()
-        self.navigationController?.pushViewController(authViewController, animated: true)
+        let authButton = createAuthButton()
+        view.addSubview(authButton)
+    }
+    
+    func createLayout() {
         notes = CoreDataManager.shared.fetchNotes()
         
         title = "My Notes"
@@ -154,7 +158,43 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         ]
         
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    func createAuthButton()  -> UIButton {
+        let authButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50));
+        authButton.center = view.center;
+        authButton.setTitle("Authorize", for: .normal);
+        authButton.backgroundColor = .systemGray;
+        authButton.addTarget(self, action: #selector(didTapAuthButton), for: .touchUpInside);
+        return authButton
+    }
 
+    @objc func didTapAuthButton() {
+        let context = LAContext()
+        var error: NSError? = nil
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Please authorize with Touch ID"
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                   localizedReason: reason,
+                                   reply: {[weak self] success, error in
+                DispatchQueue.main.async {
+                    guard success, error == nil else {
+                        let alert = UIAlertController(title: "Failed to Authenticate", message: "Please try again", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+                        self?.present(alert, animated: true)
+                        return;
+                    }
+                    //show screen
+                    //success
+                    self?.createLayout()
+                }
+            })
+        } else {
+            // can not use
+            let alert = UIAlertController(title: "Unavailable", message: "You cant use this feature", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+            present(alert, animated: true)
+        }
     }
 
 }
