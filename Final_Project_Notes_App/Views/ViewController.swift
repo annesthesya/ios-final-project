@@ -16,8 +16,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var label: UILabel!
-    
+    private let searchController = UISearchController()
     var notes : [AppNote] = []
+    private var filteredNotes: [AppNote] = []
     
 //    var models : [(title: String, note : String)] = []
     
@@ -112,6 +113,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     }
     
+    private func configureSearchBar() {
+        navigationItem.searchController = searchController
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+    }
+    
+    private func searchNotesFromStorage(_ text: String) {
+        if text.isEmpty {
+            notes = CoreDataManager.shared.fetchNotes()
+        } else {
+            notes = CoreDataManager.shared.fetchNotes(filter: text)
+        }
+        tableView.reloadData()
+    }
+    
+    private func indexForNote(id: UUID, in list: [AppNote]) -> IndexPath {
+        let row = Int(list.firstIndex(where: { $0.id == id }) ?? 0)
+        return IndexPath(row: row, section: 0)
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -124,6 +147,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         title = "My Notes"
         view.backgroundColor = .darkGray
+        
+        configureSearchBar()
         
         label.text = "No notes yet!"
         label.textAlignment = .center
@@ -199,3 +224,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 }
 
+extension ViewController: UISearchControllerDelegate, UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchNotesFromStorage(searchText)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchNotesFromStorage("")
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, !query.isEmpty else { return }
+        searchNotesFromStorage(query)
+    }
+}

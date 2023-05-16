@@ -57,15 +57,19 @@ extension CoreDataManager {
         return note
     }
     
-    func fetchNotes() -> [AppNote] {
-        let request : NSFetchRequest<AppNote> = AppNote.fetchRequest()
+    func fetchNotes(filter: String? = nil) -> [AppNote] {
+        let request: NSFetchRequest<AppNote> = AppNote.fetchRequest()
         let sortDescriptor = NSSortDescriptor(keyPath: \AppNote.lastEdit, ascending: false)
         request.sortDescriptors = [sortDescriptor]
-        do {return try viewContext.fetch(request) }
-        catch{
-            print("Error when fetching: \(error.localizedDescription)")
-            return []
+            
+        if let filter = filter {
+            let predicate_text = NSPredicate(format: "text contains[cd] %@", filter)
+            let predicate_title = NSPredicate(format: "title contains[cd] %@", filter)
+            let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [predicate_text, predicate_title])
+            request.predicate = predicate
         }
+            
+        return (try? viewContext.fetch(request)) ?? []
     }
     
     func updateNote(note: AppNote,title: String, text: String) -> Void{
@@ -79,5 +83,4 @@ extension CoreDataManager {
         viewContext.delete(note)
         save()
     }
-    
 }
