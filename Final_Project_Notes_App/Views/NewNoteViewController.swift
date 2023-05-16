@@ -30,8 +30,12 @@ class NewNoteViewController: UIViewController {
     @objc @IBAction func leftBarButtonItemTapped() {
         
         if noteText != noteTextField.text! || noteTitle != noteTitleField.text! {
-                let alert = UIAlertController(title: "Unsaved Changes", message: "You have unsaved changes. Do you want to keep editing or discard them?", preferredStyle: .actionSheet)
+                var alert = UIAlertController(title: "Unsaved Changes", message: "You have unsaved changes. Do you want to keep editing or discard them?", preferredStyle: .actionSheet)
                 
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    alert = UIAlertController(title: "Unsaved Changes", message: "You have unsaved changes. Do you want to keep editing or discard them?", preferredStyle: .alert)
+                }
+            
                 let saveAction = UIAlertAction(title: "Save", style: .default) { (action) in
                     self.rightBarButtonItemTapped()
                 }

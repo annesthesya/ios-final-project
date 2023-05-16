@@ -46,6 +46,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.tableView.reloadData()
             self.label.isHidden = true
             self.tableView.isHidden = false
+            
             let alert = UIAlertController(title: "Success", message: "Your new note has been saved!", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel)
             alert.addAction(cancelAction)
