@@ -19,7 +19,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var label: UILabel!
     private let searchController = UISearchController()
-    var notes : [AppNote] = []
+    var notes : [AppNote] = []{
+        didSet {
+            if notes.count != 0 {
+                navigationItem.largeTitleDisplayMode = .never
+                label.isHidden = true
+                tableView.isHidden = false
+            } else {
+                navigationItem.largeTitleDisplayMode = .always
+                label.isHidden = false
+                tableView.isHidden = true
+            }
+            }
+    }
     private var filteredNotes: [AppNote] = []
     
 //    var models : [(title: String, note : String)] = []
@@ -158,16 +170,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         view.backgroundColor = .darkGray
         
         configureSearchBar()
-        
-        if notes.count != 0 {
-            navigationItem.largeTitleDisplayMode = .never
-            label.isHidden = true
-            tableView.isHidden = false
-        } else {
-            navigationItem.largeTitleDisplayMode = .always
-            label.isHidden = false
-            tableView.isHidden = true
-        }
         
         authButton.isHidden = true
         
