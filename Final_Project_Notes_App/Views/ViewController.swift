@@ -10,9 +10,6 @@ import LocalAuthentication
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-//    let number = RootTableViewCell.rootTableViewCellCount
-//    let launch = UserDefaults.standard.integer(forKey: AppDelegate.Constants.appLaunchCountUserDefaultsKey)
-    
     @IBOutlet weak var tableView: UITableView!
     
     var authButton = UIButton()
@@ -33,15 +30,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
     }
     private var filteredNotes: [AppNote] = []
-    
-//    var models : [(title: String, note : String)] = []
-    
-    @objc @IBAction func leftBarButtonItemTapped() {
-//        let alert = UIAlertController(title: "Cell Count", message: "The number of cells is \(number).", preferredStyle: .alert)
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-//        alert.addAction(cancelAction)
-//        present(alert, animated: true)
-    }
     
     @objc @IBAction func rightBarButtonItemTapped() {
         let newNoteViewController = NewNoteViewController()
@@ -203,10 +191,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func createAuthButton()  -> UIButton {
-//        let authButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50));
         authButton.translatesAutoresizingMaskIntoConstraints = false
-//        authButton.center = view.center;
-
         authButton.layer.cornerRadius = 10.0
         authButton.setTitle("Authorize", for: .normal)
         authButton.backgroundColor = .systemGray

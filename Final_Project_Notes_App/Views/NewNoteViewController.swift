@@ -60,13 +60,13 @@ class NewNoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.leftBarButtonItemTapped))
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(NewNoteViewController.leftBarButtonItemTapped))
         swipeGesture.direction = .right
         view.addGestureRecognizer(swipeGesture)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(NewNoteViewController.rightBarButtonItemTapped))
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(ViewController.leftBarButtonItemTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(NewNoteViewController.leftBarButtonItemTapped))
         
         view.backgroundColor = .darkGray
         

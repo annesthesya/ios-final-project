@@ -10,41 +10,10 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    struct Constants {
-        
-//        static let appLaunchCountUserDefaultsKey = "appLaunchCountUserDefaultsKey"
-        static let notesUserDefaultsKey = "notesUserDefaultsKey"
-        
-    }
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         CoreDataManager.shared.load()
-        
-//
-//        let standardUserDefaults = UserDefaults.standard
-//
-//        let key = "\(index)"
-//
-//        var notesArray = [(title: String, text : String)]()
-//
-//        if let existingArr = UserDefaults.standard.array(forKey: Constants.notesUserDefaultsKey) as? [(title: String, text : String)] {
-//            notesArray = existingArr
-//        }
-//
-//        if let currentCount = notesDict[key] {
-//            notesDict[key] = currentCount + 1
-//        }
-//        else {
-//            notesDict[key] = 1
-//        }
-        
-//        UserDefaults.standard.set(notesArray, forKey: Constants.notesUserDefaultsKey)
-        
-        
-//        let currentAppLaunchCount = standardUserDefaults.integer(forKey: Constants.appLaunchCountUserDefaultsKey)
-//        standardUserDefaults.set(currentAppLaunchCount + 1, forKey: Constants.appLaunchCountUserDefaultsKey)
         
         return true
     }
