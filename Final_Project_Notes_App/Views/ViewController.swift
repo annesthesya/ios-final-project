@@ -15,9 +15,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var tableView: UITableView!
     
+    var authButton = UIButton()
+    
     @IBOutlet weak var label: UILabel!
     private let searchController = UISearchController()
-    var notes : [AppNote] = []
+    var notes : [AppNote] = []{
+        didSet {
+            if notes.count != 0 {
+                navigationItem.largeTitleDisplayMode = .never
+                label.isHidden = true
+                tableView.isHidden = false
+            } else {
+                navigationItem.largeTitleDisplayMode = .always
+                label.isHidden = false
+                tableView.isHidden = true
+            }
+            }
+    }
     private var filteredNotes: [AppNote] = []
     
 //    var models : [(title: String, note : String)] = []
@@ -139,8 +153,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let authButton = createAuthButton()
+        authButton = createAuthButton()
         view.addSubview(authButton)
+        let constraints = [
+        authButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        authButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        authButton.widthAnchor.constraint(equalToConstant: 200.0),
+        authButton.heightAnchor.constraint(equalToConstant: 50.0)]
+        NSLayoutConstraint.activate(constraints)
+        
     }
     
     func createLayout() {
@@ -151,21 +172,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         configureSearchBar()
         
+        authButton.isHidden = true
+        
         label.text = "No notes yet!"
         label.textAlignment = .center
-        if notes.count != 0 {
-            navigationItem.largeTitleDisplayMode = .never
-            label.isHidden = true
-        }
         view.addSubview(label)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Note", style: .done, target: self, action: #selector(ViewController.rightBarButtonItemTapped))
         
         tableView.dataSource = self
         tableView.delegate = self
-        if notes.count != 0 {
-            tableView.isHidden = false
-        }
         tableView.backgroundColor = .darkGray
         tableView.register(NewTableViewCell.self, forCellReuseIdentifier: NewTableViewCell.newTableViewCellReuseIdentifier)
         tableView.rowHeight = 80
@@ -187,11 +203,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func createAuthButton()  -> UIButton {
-        let authButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50));
-        authButton.center = view.center;
-        authButton.setTitle("Authorize", for: .normal);
-        authButton.backgroundColor = .systemGray;
-        authButton.addTarget(self, action: #selector(didTapAuthButton), for: .touchUpInside);
+//        let authButton = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50));
+        authButton.translatesAutoresizingMaskIntoConstraints = false
+//        authButton.center = view.center;
+
+        authButton.layer.cornerRadius = 10.0
+        authButton.setTitle("Authorize", for: .normal)
+        authButton.backgroundColor = .systemGray
+        authButton.addTarget(self, action: #selector(didTapAuthButton), for: .touchUpInside)
         return authButton
     }
 
@@ -205,7 +224,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                                    reply: {[weak self] success, error in
                 DispatchQueue.main.async {
                     guard success, error == nil else {
-                        let alert = UIAlertController(title: "Failed to Authenticate", message: "Please try again", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Failed to Authenticate", message: "Please try again!", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
                         self?.present(alert, animated: true)
                         return;
@@ -217,7 +236,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             })
         } else {
             // can not use
-            let alert = UIAlertController(title: "Unavailable", message: "You cant use this feature", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Unavailable", message: "You can't use this feature!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
             present(alert, animated: true)
         }
